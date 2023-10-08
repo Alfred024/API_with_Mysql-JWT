@@ -18,7 +18,7 @@ async function get(tabla, id ) {
 async function upsert(tabla, data) {
     let users = await list(tabla);
     users.push(data);
-    //db[collection].push(data);
+    return data;
 }
 
 async function remove(tabla, id) {
