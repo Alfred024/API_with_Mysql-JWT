@@ -1,24 +1,35 @@
 const db = {
     'user': [
-        { id: 1, name: 'Miguel' }
-    ]
+        { id: '1', name: 'Miguel' },
+        { id: '2', name: 'Pedro' },
+        { id: '3', name: 'Ana' },
+    ],
 };
 
-function list(tabla) {
+async function list(tabla) {
     return db[tabla];
 }
 
-function get(tabla, id ) {
-    let col = list(tabla);
-    return col.filter( (item) => item.id === id )[0] || null;
+async function get(tabla, id ) {
+    let col = await list(tabla);
+    return col.filter( (item) => item.id === id )|| null;
 }
 
-function upsert(tabla, data) {
-    db[collection].push(data);
+async function upsert(tabla, data) {
+    let users = await list(tabla);
+    users.push(data);
+    //db[collection].push(data);
 }
 
-function remove(tabla, id) {
-    return true;
+async function remove(tabla, id) {
+    let users = await list(tabla);
+    let userIndex = 0;
+    while(users[userIndex].id != id){
+        userIndex++;
+    }
+    let userDeleted = users[userIndex];
+    users.splice(userIndex, 1);
+    return userDeleted;
 }
 
 module.exports = {
