@@ -36,12 +36,12 @@ module.exports = function (injectedStore) {
                 password: user.password,
             });
         }
-
-        return store.upsert(TABLA, user);
+        return store.upsert(TABLA, newUser);
     }
 
-    function remove(id) {
-        return store.remove(TABLA, id);
+    async function remove(id) {
+        auth.remove(id);
+        return await store.remove(TABLA, id);
     }
 
     return {

@@ -27,12 +27,12 @@ router.get('/:id', (req, res)=>{
 
 router.post('/', (req, res) =>{
     Controller.upsert(req.body)
-    .then((user) =>{
-        response.succes(req, res, user, 200);
-    })
-    .catch((err) =>{
-        response.error(req, res, err, 401);
-    });
+        .then((user) =>{
+            response.succes(req, res, user, 200);
+        })
+        .catch((err) =>{
+            response.error(req, res, err, 401);
+        });
 });
 
 router.delete('/:id', (req, res) =>{

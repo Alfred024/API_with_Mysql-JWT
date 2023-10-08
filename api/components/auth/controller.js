@@ -11,8 +11,8 @@ module.exports = function (injectedStore) {
             id: data.id,
         }
 
-        if(data.userName){
-            authData.userName = data.userName
+        if(data.username){
+            authData.username = data.username
         }
 
         if(data.password){
@@ -21,7 +21,12 @@ module.exports = function (injectedStore) {
         return store.upsert(TABLA, authData);
     }
 
+    async function remove(id) {
+        return await store.remove(TABLA, id);
+    }
+
     return {
         upsert,
+        remove,
     }
 }
