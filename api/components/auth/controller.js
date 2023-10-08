@@ -1,9 +1,20 @@
+const auth = require('../../auth/index');
 const TABLA = 'auth';
 
 module.exports = function (injectedStore) {
     let store = injectedStore;
     if( !store ){
         store = require('../../../store/dummy');
+    }
+
+    async function login(username, password) {
+        const data = await store.query(TABLA, { username: username });
+
+        if(data[0].password === password){
+            return auth.sign(data[0]);
+        }else{
+            throw new Error('El username no existe');
+        }
     }
 
     function upsert(data) {
@@ -26,6 +37,7 @@ module.exports = function (injectedStore) {
     }
 
     return {
+        login,
         upsert,
         remove,
     }

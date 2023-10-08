@@ -34,6 +34,24 @@ async function remove(tabla, id) {
     return userDeleted;
 }
 
+async function query(tabla, q) {
+
+    let usernameSearch = q.username;
+
+    let col = await list(tabla);
+    let authTable = col[tabla];
+
+    let keys = Object.keys(q);
+    //Obtiene el nombre del atributo de aquel objeto al que le haremos la comparación
+    let key = keys[0];
+
+    return authTable.filter( (item) => item[key] === usernameSearch ) || null;
+}
+
 module.exports = {
-    list, get, upsert, remove
+    list, 
+    get, 
+    upsert, 
+    remove, 
+    query,
 }
