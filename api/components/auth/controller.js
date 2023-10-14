@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const auth = require('../../auth/index');
 const TABLA = 'auth';
 
@@ -10,14 +11,20 @@ module.exports = function (injectedStore) {
     async function login(username, password) {
         const data = await store.query(TABLA, { username: username });
 
-        if(data[0].password === password){
-            return auth.sign(data[0]);
-        }else{
-            throw new Error('El username no existe');
-        }
+        return bcrypt.compare(password, data[0].password)
+            .then(samePassword =>{
+                if(samePassword){
+                    return auth.sign(data[0]);
+                }else{
+                    throw new Error('El username no existe');
+                }
+            })
+            .catch((err) =>{
+                console.log(`Encriptetion error: ${err}`);
+            });
     }
 
-    function upsert(data) {
+    async function upsert(data) {
         const authData = {
             id: data.id,
         }
@@ -27,7 +34,7 @@ module.exports = function (injectedStore) {
         }
 
         if(data.password){
-            authData.password = data.password
+            authData.password = await bcrypt.hash(data.password, 5);
         }
         return store.upsert(TABLA, authData);
     }
