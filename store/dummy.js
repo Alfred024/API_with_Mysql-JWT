@@ -44,7 +44,7 @@ async function query(tabla, q) {
     let keys = Object.keys(q);
     //Obtiene el nombre del atributo de aquel objeto al que le haremos la comparación
     let key = keys[0];
-
+    
     return authTable.filter( (item) => item[key] === usernameSearch ) || null;
 }
 
