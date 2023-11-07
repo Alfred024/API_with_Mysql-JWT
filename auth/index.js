@@ -15,6 +15,10 @@ const check = {
             throw new Error('No tienes permisos para editar este perfil');
         }
     },
+
+    logged: function(req, owner) {
+        const decoded = decodeHeader(req);
+    },
 }
 
 function decodeHeader(req) {

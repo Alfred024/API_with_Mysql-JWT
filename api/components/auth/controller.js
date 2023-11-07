@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const auth = require('../../../auth');
-const TABLA = 'auth';
+const TABLA = 'AUTH';
 
 module.exports = function (injectedStore) {
     let store = injectedStore;

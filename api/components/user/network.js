@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/', (req, res)=>{
     Controller.list()
-        .then((lista) =>{
-            response.succes(req, res, lista,200);
+        .then((data) =>{
+            response.succes(req, res, data,200);
         })
         .catch((err) =>{
             response.error(req, res, err, 401);
@@ -18,8 +18,18 @@ router.get('/', (req, res)=>{
 
 router.get('/:id', (req, res)=>{
     Controller.get(req.params.id)
-        .then((lista) =>{
-            response.succes(req, res, lista,200);
+        .then((data) =>{
+            response.succes(req, res, data,200);
+        })
+        .catch((err) =>{
+            response.error(req, res, err, 401);
+        });
+});
+
+router.get('/:id/following', (req, res)=>{
+    Controller.following(req.params.id)
+        .then((data) =>{
+            response.succes(req, res, data,200);
         })
         .catch((err) =>{
             response.error(req, res, err, 401);
@@ -34,6 +44,14 @@ router.post('/', (req, res) =>{
         .catch((err) =>{
             response.error(req, res, err, 401);
         });
+});
+
+router.post('/follow/:id', secure('follow'), (req, res, next) =>{
+    Controller.follow(req.user.id, req.params.id)
+        .then(data => {
+            response.success(req, res, data, 201);
+        })
+        .catch(next);
 });
 
 router.put('/', 
