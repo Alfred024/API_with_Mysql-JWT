@@ -63,6 +63,7 @@ function insert(table, data) {
 }
 
 function update(table, data) {
+    console.log(`Id del uusario a actualizar: ${data.id}`);
     return new Promise((resolve, reject) => {
         connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data, data.id], (err, result) => {
             if (err) return reject(err);
@@ -72,6 +73,8 @@ function update(table, data) {
 }
 
 function upsert(table, data) {
+    console.log('DATAAAA');
+    console.log(data);
     if (data && data.id) {
         return update(table, data);
     } else {
