@@ -8,12 +8,12 @@ module.exports = function (injectedStore) {
         store = require('../../../store/mysql');
     }
 
-    function list() {
-        return store.list(TABLA);
+    async function list() {
+        return await store.list(TABLA);
     }
 
-    function get(id) {
-        return store.get(TABLA, id);
+    async function get(id) {
+        return await store.get(TABLA, id);
     }
 
     async function upsert(user) {

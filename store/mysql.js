@@ -73,8 +73,6 @@ function update(table, data) {
 }
 
 function upsert(table, data) {
-    console.log('DATAAAA');
-    console.log(data);
     if (data && data.id) {
         return update(table, data);
     } else {
